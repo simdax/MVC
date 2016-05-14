@@ -9,16 +9,23 @@ PatternGui : ObjectGui{
 		}
 		{
 			var holder;
-			PopUpMenu(v, 100@50).items_(list.collect(_.asSymbol))
-			.action_{arg self;
-				holder.view_(
-					//that's ugly, I know...
-					*list.select({|x| x.name==self.item})
+			ColoredView(v, b).layout_(
+				VLayout(
+					PopUpMenu()
+					.items_(list.collect(_.asSymbol))
+					.action_{arg self;
+						holder.view_(
+							//that's ugly, I know...
+							*list.select({|x| x.name==self.item})
+						)
+					},
+					Vholder()
+					.minSize_(100@100)
+					.view_(
+						list[0], model
+					)
 				)
-			};
-			holder=Vholder(v, 200@200).view_(
-				list[0], model
-			)
+			);
 		}
 	}
 	update{ arg qui, que, quoi;
