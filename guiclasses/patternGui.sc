@@ -1,14 +1,9 @@
 PatternGui : ObjectGui{
-	// much more standard gui
-	gui { arg parent, bounds ... args;
-		var layout=parent ? ColoredView();
-		bounds ?? {bounds=layout.bounds};
+	// much more standard gui func
+	gui { arg layout=ColoredView().front, bounds=layout.bounds ;
 		this.guiBody(layout,bounds);
-		if(parent.isNil,{
-			layout.front;
-		});
 	}
-	guiBody{ arg v, b;
+	guiBody{ arg v;
 		var list=model.guiList.asArray;
 		if(list.isEmpty)
 		{

@@ -1,20 +1,32 @@
 (
-
+w=Window('test', 150@150).front;
 a=Pbind(\bob, b=Pseq([0,1,2,5,10], inf));
 a.trace.play;
-b.gui()
+b.gui(w, Rect( 20, 20, 40, 40));
+a.gui(w, Rect( 20, 20, 40, 40));
+)
+(
+
+Pbind(
+	\degree, a=Pseq([0,1,2,4,1,2].normalizeSum, inf),
+	\dur, b=Pseq([1,1,2,1].normalizeSum, inf)
+).play;
+[a, b].do(_.gui);
+)
+
+
+(
+a=Pbind.base;
+a.gui;
 )
 
 (
-Pbind(\degree, Pseq([5])).gui
+
+c=Pbind(
+	\degree, a=Pseq([0,1,2,4,1,2].normalizeSum, inf),
+	\dur, b=Pseq([1,1,2,1].normalizeSum, inf)
+);
+c.play;
+c.gui(nil, 150@150)
+
 )
-
-Pchain().gui
-
-b.gui(nil, 300@300)
-
-ColoredView(nil,150@150 ).layout_(VLayout(
-	StringGui(0),//	Vholder().view_(StringGui, 0),
-	PopUpMenu()
-)).front
-
