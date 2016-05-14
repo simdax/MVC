@@ -1,7 +1,8 @@
-ListPatternGui : ObjectGui{
+ListPatternGui : PatternGui{
 	var view;
 	var gate=true;
 	guiBody{ arg v, b;
+		b.postln;
 		view=MultiSliderView(v, b).value_(model.list)
 		.action_{
 			arg self;

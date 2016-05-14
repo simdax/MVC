@@ -28,17 +28,17 @@ PatternGui : ObjectGui{
 						)
 					},
 					holder=Vholder()
-					.minSize_
+					.fixedSize_
 						(
-							if(v.bounds.extent==(0@0))
+							(if(v.bounds.extent==(0@0))
 							{150@150}
 							{v.bounds.extent}
-							- (0@PopUpMenu().sizeHint.height)
+							- (0@(PopUpMenu().sizeHint.height+20))).postln
 						)
 					.view_(
 						list[0], model
 					)
-				)
+				).spacing_(5).margins_(0)
 			);
 		}
 	}

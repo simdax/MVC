@@ -1,8 +1,3 @@
-a=FlowView().front;
-ColoredView(a).minSize_(200@200)
-
-(150@150) - PopUpMenu().sizeHint.height
-(0@0).isNil
 (
 
 a=Pbind(\bob, b=Pseq([0,1,2,5,10], inf));
