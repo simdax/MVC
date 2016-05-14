@@ -24,12 +24,12 @@
 		if(this.dur.isNil){this.add(\dur, 1)};
 		if(this.amp.isNil){this.add(\amp, 0.4)};		
 	}
-	gui{ arg p, bounds;
-		var res=PbindGUI(p, bounds).value_(this);
-		this.addMissing; 
-		//		this.showGui(res);
-		^res
-	}
+	// gui{ arg p, bounds;
+	// 	var res=PbindGUI(p, bounds).value_(this);
+	// 	this.addMissing; 
+	// 	//		this.showGui(res);
+	// 	^res
+	// }
 }
 
 /*

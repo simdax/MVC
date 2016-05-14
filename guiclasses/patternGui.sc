@@ -1,7 +1,15 @@
-PatternGui : ObjectGui{	
+PatternGui : ObjectGui{
+	// much more standard gui
+	gui { arg parent, bounds ... args;
+		var layout=parent ? ColoredView();
+		bounds ?? {bounds=layout.bounds};
+		this.guiBody(layout,bounds);
+		if(parent.isNil,{
+			layout.front;
+		});
+	}
 	guiBody{ arg v, b;
 		var list=model.guiList.asArray;
-		v.decorator.nextLine;
 		if(list.isEmpty)
 		{
 			var str=" sourry, no GUI available :( ";
@@ -9,7 +17,7 @@ PatternGui : ObjectGui{
 		}
 		{
 			var holder;
-			ColoredView(v, b).layout_(
+			v.layout_(
 				VLayout(
 					PopUpMenu()
 					.items_(list.collect(_.asSymbol))
@@ -19,8 +27,14 @@ PatternGui : ObjectGui{
 							*list.select({|x| x.name==self.item})
 						)
 					},
-					Vholder()
-					.minSize_(100@100)
+					holder=Vholder()
+					.minSize_
+						(
+							if(v.bounds.extent==(0@0))
+							{150@150}
+							{v.bounds.extent}
+							- (0@PopUpMenu().sizeHint.height)
+						)
 					.view_(
 						list[0], model
 					)
@@ -28,11 +42,4 @@ PatternGui : ObjectGui{
 			);
 		}
 	}
-	update{ arg qui, que, quoi;
-		[qui, que, quoi].postln;
-		// if(que != this){
-			
-		// }
-	}
-
 }
