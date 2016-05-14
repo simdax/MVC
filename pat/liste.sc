@@ -1,6 +1,4 @@
-+ Pseq{
-	guiClass{^PseqGC}
+
++ ListPattern{
+	guiList{^ListPatternGui}
 }
-// +Pbind{
-// 	guiClass{^PbindGC}
-// }
