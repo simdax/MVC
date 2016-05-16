@@ -1,7 +1,13 @@
 (
-w=Window('test', 150@150).front;
+a=Pseq([5]);
+a.gui(lay:HLayout)
+)
+
+(
+w=Window('test').front;
 a=Pbind(\bob, b=Pseq([0,1,2,5,10], inf));
 a.trace.play;
+/// todo : marche pas
 b.gui(w, Rect( 20, 20, 40, 40));
 a.gui(w, Rect( 20, 20, 40, 40));
 )

@@ -1,9 +1,12 @@
 PatternGui : ObjectGui{
+
+	var <>layout;
 	// much more standard gui func
-	gui { arg layout=ColoredView().front, bounds=layout.bounds ;
-		this.guiBody(layout,bounds);
+	gui { arg parent=ColoredView().front, bounds=parent.bounds, lay=HLayout ;
+		layout=lay;
+		this.guiBody(parent,bounds);
 	}
-	guiBody{ arg v;
+	guiBody{ arg v, optionLayout=layout;
 		var list=model.guiList.asArray;
 		if(list.isEmpty)
 		{
@@ -13,7 +16,7 @@ PatternGui : ObjectGui{
 		{
 			var holder;
 			v.layout_(
-				VLayout(
+				layout.new(
 					PopUpMenu()
 					.items_(list.collect(_.asSymbol))
 					.action_{arg self;
@@ -28,7 +31,7 @@ PatternGui : ObjectGui{
 							(if(v.bounds.extent==(0@0))
 							{150@150}
 							{v.bounds.extent}
-							- (0@(PopUpMenu().sizeHint.height+20))).postln
+							- (0@(PopUpMenu().sizeHint.height+20)))
 						)
 					.view_(
 						list[0], model

@@ -1,7 +1,3 @@
-+ Pattern {
-	guiClass{^PatternGui}
-	guiList{^[]}
-}
 
 + Pbind {
 
