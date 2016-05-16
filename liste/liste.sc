@@ -3,9 +3,8 @@
 	guiClass{^PatternGui}
 	guiList{^[]}
 }
-
+//Pattern.gui.front
 + ListPattern{
 	guiList{^ListPatternGui}
 }
 
-//Pattern.gui.front
