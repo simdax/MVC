@@ -46,8 +46,7 @@ z.keyDownAction_{arg ... args;
 // };
 
 ~reservoirMSV=~ppar.list.clump(2).collect({|x|
-	x[1].gui(z,
-		(y.wpp(10)@50).asRect)
+	x[1].gui(z,(y.wpp(10)@50).asRect)
 });
 
 
@@ -58,11 +57,16 @@ SimpleController(z).put(\clickVide,
 	{ arg ... args;	//args;
 		y.mouseDownAction.value(*[y]++args.drop(2)); }
 );
-SimpleController(z).put(\taille, {arg obj, msg, taille;
-	z.children.do { |x, i|
+//z.children.do { |x, i|
+	SimpleController(z).put(\taille, {arg self, msg, obj, pt;
+		var pbind=~reservoirMSV.detect({|x| x.view==obj}).model;
+		var index=~ppar.list.detectIndex(_==pbind);
+		~ppar.list[index]=y.dpw(pt.x)
+		;
 		if(Pdef(\bob).isPlaying)
 		{Pdef(\bob).stop; ~pdef.value.play};
-	}}  
+	})
+//}  
 );
 // movingLine
 SimpleController(y).put(\go, {arg ... args;
@@ -82,6 +86,6 @@ SimpleController(y).put(\go, {arg ... args;
 
 z.children.do(_.changed(\taille));
 
-r{ loop{~ppar.list.postln; 1.yield}}.play;
+
 
 )
