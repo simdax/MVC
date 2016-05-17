@@ -8,3 +8,6 @@
 	guiList{^ListPatternGui}
 }
 
++ Ptpar{
+	guiClass{^PtparGui}
+}

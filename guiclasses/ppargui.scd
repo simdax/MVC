@@ -5,20 +5,19 @@ s.boot;
 
 ~ppar=Ptpar([
 	0, Pbind(\degree, Pseq([0,5,1,4,2,1,2])),
-	0, Pbind.base
+	//	0, Pbind.base
 ]);
 
 //// INIT  => WINDOWS
 ~offset=0;
-w=Window("io", Rect(0, 0, 400, 400))
-//.alwaysOnTop_(true)
-.acceptsMouseOver_(true)
+//w=Window("io",  400@400)
+w=View(nil, 400@400)
 .front;
-z=~a.new(w, w.view.bounds.extent); z.addFlowLayout;
-y=MovingLine(w, w.view.bounds.extent);
+z=MoveView.new(w, w.bounds.extent); z.addFlowLayout;
+y=MovingLine(w, w.bounds.extent);
 // movingLine does not accept focus so we have to transmit him kboard actions
 z.keyDownAction_{arg ... args;
-	y.keyDownAction.value(*args);
+	y.keyDownAction.value(*args); 
 };
 
 /// GUI OBJECT

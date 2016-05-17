@@ -1,7 +1,7 @@
 
 + Pbind {
 
-	guiClass{^PbindEnvirGui}
+	guiClass{^PbindGuiMVC}
 	*base{
 		^Pbind(\degree, 0, \dur, 1, \amp, 0.4)
 	}
