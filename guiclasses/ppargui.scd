@@ -1,68 +1,79 @@
-(
-a=
-(new{arg s, p, b;
-View(p, b).mouseEnterAction_{ arg self, x, y, mod, but;
-			self.children.do { |x|
-				x.acceptsMouse_(false)
-				.addAction({ arg s, xx, yy, m, b;
-					if(m!=0){self.mouseDownAction.value(s, xx, yy, m, b)};
-				}, \mouseDownAction)
-			};
-		}
-		.mouseDownAction_({ arg self, x, y, mod, but, nbCl;
-			var v=self.children.detect{|vue| vue.bounds.contains(x@y)};
-			v.postln;
-			if(v.notNil)
-			{
-				v.focus; v.bounds.postln;
-				mod.isCtrl.if {self.moveAction(self, x, y, v)};
-				mod.isShift.if {self.resizeAction(self, x, y, v)}
-				{
-					f.switch(
-						nil, {v.acceptsMouse_(true); f=v},
-						v, {},
-						{f.acceptsMouse_(false); f=v.acceptsMouse_(true)}
-					);
-				}
-			};
-		})
-.mouseUpAction_{ arg self;	self.mouseMoveAction_{} })
 
 (
 Window.closeAll;
+s.boot;
 
-// a=Ppar([nil]);
-// b=Pbind();
+//// INIT  => WINDOWS
+~offset=0;
+w=Window("io", Rect(0, 0, 400, 400))
+//.alwaysOnTop_(true)
+.acceptsMouseOver_(true)
+.front;
+z=~a.new(w, w.view.bounds.extent); z.addFlowLayout;
+y=MovingLine(w, w.view.bounds.extent);
+// movingLine does not accept
+z.keyDownAction_{arg ... args; 
+	y.keyDownAction.value(*args);
+};
 
-w=Window("io", Rect(0, 0, 400, 400)).alwaysOnTop_(true).front;
-z=MoveView.new(w, 150@150);
-y=MovingLine(w);
-z.keyDownAction_{arg ... args; 'io'.postln;
-	y.keyDownAction.value(*args)};
- Button(z);
-
-)
-
-
-z.keyDownAction.value(0,$ ,32, 32, 32)
-
-
-PFF(offset,
-	Ptpar(
-		pos, pat, ...
-	)
-)
-
-		if(pat.isPlaying)
-		{pat.stop}
-		{pat=
-		PFF(timeline.x,
-			Ptpar(
-				(timeline.durees+++timeline.patterns).collect({|x|
-					x.postln;
-					[x[0], Pfindur(x[1], x[2]).midi]
-				}).flat
+/// GUI OBJECT
+~msv=(new:{	arg s; s.msvInit},
+	msvInit:{arg s; var msv=MultiSliderView(parent:z, bounds:
+		((s.widthF.value)@50).asRect
+	).value_(Array.rand(s.duree,0,10));
+	msv.beginDragAction_{nil};
+		s.msv=msv;
+}, duree:3, widthF:{arg s; y.wpp(s.duree)},
+	pbind:{arg s;
+		//		var notes=[0,10].asSpec.map(s.msv.value).round;
+		var notes=s.msv.value;
+		[
+			y.dpw(s.decalage),
+			Pbind(
+				*[\degree,notes.pseq,
+				\dur, (s.duree/notes.size)]
 			)
-		).play}
+		]},
+		decalage:{arg s; s.msv.bounds.left}
+);
+~reservoirMSV=2.collect{
+	var a=~msv.copy; a.new; a
+};
+
+
+//////// CONTROLLERS //////
+// mainFEN
+SimpleController(z).put(\clickVide,
+	{ arg ... args;	//args;
+		y.mouseDownAction.value(*[y]++args.drop(2)); }
+);
+SimpleController(z).put(\taille, {arg obj, msg, taille;
+	z.children.do { |x, i|
+		if(Pdef(\bob).isPlaying)
+		{Pdef(\bob).stop; ~pdef.value.play};
+	}}  
+);
+// movingLine
+SimpleController(y).put(\go, {arg ... args;
+	~offset=y.dpw(args[2]);
+	("offset = "++~offset);
+	"++ les decalages :";
+	~pdef.value.play
+})
+.put(\stop, { Pdef(\bob).stop})
+;
+
+//// SOUND
+~pdef={	Pdef(\bob,
+		PFF(~offset,
+			Ptpar(
+				z.children.size.collect({|x, i|
+					~reservoirMSV[x].pbind
+				}).flatten
+			)//.trace
+		)
+	).quant_(0)};
+
+z.children.do(_.changed(\taille))
 
 )
