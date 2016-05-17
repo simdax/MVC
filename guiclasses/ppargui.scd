@@ -3,6 +3,11 @@
 Window.closeAll;
 s.boot;
 
+~ppar=Ptpar([
+	0, Pbind(\degree, 5),
+	0, Pbind.base
+]);
+
 //// INIT  => WINDOWS
 ~offset=0;
 w=Window("io", Rect(0, 0, 400, 400))
@@ -11,15 +16,15 @@ w=Window("io", Rect(0, 0, 400, 400))
 .front;
 z=~a.new(w, w.view.bounds.extent); z.addFlowLayout;
 y=MovingLine(w, w.view.bounds.extent);
-// movingLine does not accept
+// movingLine does not accept focus so we have to transmit him kboard actions
 z.keyDownAction_{arg ... args; 
 	y.keyDownAction.value(*args);
 };
 
 /// GUI OBJECT
 ~msv=(new:{	arg s; s.msvInit},
-	msvInit:{arg s; var msv=MultiSliderView(parent:z, bounds:
-		((s.widthF.value)@50).asRect
+	msvInit:{arg s; var msv=MultiSliderView(parent:z,
+		bound:((s.widthF.value)@50).asRect
 	).value_(Array.rand(s.duree,0,10));
 	msv.beginDragAction_{nil};
 		s.msv=msv;
@@ -36,9 +41,15 @@ z.keyDownAction_{arg ... args;
 		]},
 		decalage:{arg s; s.msv.bounds.left}
 );
-~reservoirMSV=2.collect{
-	var a=~msv.copy; a.new; a
-};
+// ~reservoirMSV=2.collect{
+// 	var a=~msv.copy; a.new; a
+// };
+
+~reservoirMSV=~ppar.list.clump(2).collect({|x|
+	x[1].gui(z,
+		(y.wpp(10)@50).asRect)
+});
+
 
 
 //////// CONTROLLERS //////
@@ -56,7 +67,7 @@ SimpleController(z).put(\taille, {arg obj, msg, taille;
 // movingLine
 SimpleController(y).put(\go, {arg ... args;
 	~offset=y.dpw(args[2]);
-	("offset = "++~offset);
+	("offset = "++~offset).postln;
 	"++ les decalages :";
 	~pdef.value.play
 })
@@ -65,15 +76,12 @@ SimpleController(y).put(\go, {arg ... args;
 
 //// SOUND
 ~pdef={	Pdef(\bob,
-		PFF(~offset,
-			Ptpar(
-				z.children.size.collect({|x, i|
-					~reservoirMSV[x].pbind
-				}).flatten
-			)//.trace
-		)
-	).quant_(0)};
+	PFF(~offset,~ppar)
+).quant_(0)
+};
 
-z.children.do(_.changed(\taille))
+z.children.do(_.changed(\taille));
+
+r{ loop{~ppar.list.postln; 1.yield}}.play;
 
 )
