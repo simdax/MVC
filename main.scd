@@ -12,7 +12,7 @@ a.gui(nil, Rect(20,20,100,100), VLayout)
 w=Window('test', 400@400).front; 
 a=Pbind(
 	\degree, b=Pseq([0,1,2,5,10], inf),
-	\degree, c=Pseq([0,1,2,5,10], inf)
+	\dur, c=Pseq([0,1,2,5,10], inf)
 );
 a.trace.play;
 b.gui(w, Rect(0,0,400,200), lay:VLayout);

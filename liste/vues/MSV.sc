@@ -1,3 +1,5 @@
+// a multisliderV with a spec
+
 MSV : MultiSliderView{
 
 	var <spec;
