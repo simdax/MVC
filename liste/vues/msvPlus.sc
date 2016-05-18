@@ -14,10 +14,7 @@ MSVPlus : View{
 		.fixedWidth_(this.bounds.width)
 		.minHeight_(20)
 		;
-		msv=MSV()
-		.addAction({
-			arg self; indicateur.string_(self.value)
-		});
+		msv=MSV(); msv.addDependant(this);
 		msv.spec.gui(specView);
 
 		this.layout_(
@@ -40,11 +37,22 @@ MSVPlus : View{
 					])
 					.action_{
 						msv.value_(	msv.value.perform(x[1], x[2]));
-						msv.doAction
 					}
 				})
 				)
 			).margins_(0)
 		)
+	}
+	update{ arg qui, que ... quoi;
+		//		qui.hash.postln; msv.hash.postln;
+		// switch(qui,
+		// 	msv, {
+		switch(que,
+			\value, {
+				indicateur
+				.string_(quoi[0].asString)
+			}
+		)
+				//})
 	}
 }
