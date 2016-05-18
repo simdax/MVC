@@ -2,7 +2,8 @@ PatternGui : ObjectGui{
 
 	var <>layout;
 	// much more standard gui func
-	gui { arg parent=ColoredView().front, bounds=parent.bounds, lay=HLayout ;
+	gui { arg parent=ColoredView(nil, 150@150).front,
+		bounds=parent.bounds, lay=HLayout ;
 		layout=lay;
 		this.guiBody(parent,bounds);
 	}
