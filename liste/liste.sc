@@ -5,7 +5,7 @@
 }
 //Pattern.gui.front
 + ListPattern{
-	guiList{^ListPatternGui}
+	guiList{^ListPatternGui.subclasses}
 }
 
 + Ptpar{

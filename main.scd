@@ -1,6 +1,6 @@
 (
 a=Pseq([5]);
-a.gui(lay:HLayout)
+a.gui(lay:VLayout)
 )
 
 (

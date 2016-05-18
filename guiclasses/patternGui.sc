@@ -1,13 +1,12 @@
+
 PatternGui : ObjectGui{
 
-	var <>layout;
-	// much more standard gui func
 	gui { arg parent=ColoredView(nil, 150@150).front,
 		bounds=parent.bounds, lay=HLayout ;
-		layout=lay;
-		this.guiBody(parent,bounds);
+		this.guiBody(parent,bounds, lay);
 	}
-	guiBody{ arg v, optionLayout=layout;
+
+	guiBody{ arg v, b, layout;
 		var list=model.guiList.asArray;
 		if(list.isEmpty)
 		{
@@ -16,14 +15,15 @@ PatternGui : ObjectGui{
 		}
 		{
 			var holder;
-			v.layout_(
+			View(v, b).layout_(
 				layout.new(
 					PopUpMenu()
 					.items_(list.collect(_.asSymbol))
 					.action_{arg self;
 						holder.view_(
 							//that's ugly, I know...
-							*list.select({|x| x.name==self.item})
+							list.detect({|x| x.name==self.item}),
+							model
 						)
 					},
 					holder=Vholder()
