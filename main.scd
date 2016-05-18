@@ -1,15 +1,22 @@
 (
 a=Pseq([5]);
-a.gui(lay:VLayout)
+a.gui(lay: VLayout)
+)
+(
+a=Pseq([5]);
+a.gui(nil, Rect(20,20,50,50))
 )
 
+// in way for pbindEnvir
 (
-w=Window('test').front;
-a=Pbind(\bob, b=Pseq([0,1,2,5,10], inf));
+w=Window('test', 400@400).front; 
+a=Pbind(
+	\degree, b=Pseq([0,1,2,5,10], inf),
+	\degree, c=Pseq([0,1,2,5,10], inf)
+);
 a.trace.play;
-/// todo : marche pas
-b.gui(w, Rect( 20, 20, 40, 40));
-a.gui(w, Rect( 20, 20, 40, 40));
+b.gui(w, Rect(0,0,400,200), lay:VLayout);
+c.gui(w, Rect(0,200,400,200), lay:VLayout)
 )
 (
 

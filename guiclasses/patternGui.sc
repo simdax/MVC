@@ -1,7 +1,7 @@
 
 PatternGui : ObjectGui{
 
-	gui { arg parent=ColoredView(nil, 150@150).front,
+	gui { arg parent=ColoredView(nil, 300@300).front,
 		bounds=parent.bounds, lay=HLayout ;
 		this.guiBody(parent,bounds, lay);
 	}
@@ -21,7 +21,7 @@ PatternGui : ObjectGui{
 					.items_(list.collect(_.asSymbol))
 					.action_{arg self;
 						holder.view_(
-							//that's ugly, I know...
+							//that's ugly, I know... but popupmenu transforms className items in symbols
 							list.detect({|x| x.name==self.item}),
 							model
 						)
