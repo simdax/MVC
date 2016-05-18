@@ -1,7 +1,11 @@
 (
 a=Pseq([5]);
-b=a.gui(nil, 400@400, lay: VLayout);
+b=a.gui(nil, 360@300)
 
+)(
+a=Pseq([5]);
+b=a.gui(nil, 400@400, lay: VLayout);
+Pbind(\degree, Pn(a), \dur, 0.3).trace.play
 )
 (
 a=Pseq([5]);

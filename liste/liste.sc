@@ -1,7 +1,7 @@
 + Pattern {
 	*guiClass{^ListPat}
 	guiClass{^PatternGui}
-	guiList{^[]}
+	//	guiList{^this}
 }
 //Pattern.gui.front
 + ListPattern{

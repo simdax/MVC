@@ -1,8 +1,9 @@
 
 PatternGui : ObjectGui{
 	var <parent;
-	gui { arg parent=ColoredView(nil).front,
-		bounds=300@300, lay=HLayout ;
+	gui {
+		arg parent=ColoredView(nil).front,
+		bounds=360@300, lay=VLayout ;
 		parent.bounds_(bounds.asRect);		
 		this.guiBody(parent,bounds, lay);
 	}
