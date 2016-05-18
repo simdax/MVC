@@ -1,6 +1,7 @@
 (
 a=Pseq([5]);
-a.gui(lay: VLayout)
+b=a.gui(nil, 400@400, lay: VLayout);
+
 )
 (
 a=Pseq([5]);

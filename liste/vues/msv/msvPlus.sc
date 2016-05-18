@@ -1,9 +1,13 @@
+/*
+a=MSVPlus(nil, 200@200).front
+*/
+
 MSVPlus : View{
 
 	var msv, indicateur;
 	*new{ arg p, b;
 		^super.new(p, b)
-		.minWidth_(360) // ctrlSpec
+		.minWidth_(360) // ctrlSpec EZRanger un peu gourmand ?
 		.init
 	}
 	doesNotUnderstand{ arg op ... args;

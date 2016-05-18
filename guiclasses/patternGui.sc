@@ -1,14 +1,16 @@
 
 PatternGui : ObjectGui{
-
-	gui { arg parent=ColoredView(nil, 300@300).front,
-		bounds=parent.bounds, lay=HLayout ;
+	var <parent;
+	gui { arg parent=ColoredView(nil).front,
+		bounds=300@300, lay=HLayout ;
+		parent.bounds_(bounds.asRect);		
 		this.guiBody(parent,bounds, lay);
 	}
 
 	guiBody{ arg v, b, layout;
 		var list=model.guiList.asArray;
 		var innerV; var holder;
+		parent=v;
 		if(list.isEmpty)
 		{
 			var str=" sourry, no GUI available :( ";

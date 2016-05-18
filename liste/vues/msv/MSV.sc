@@ -1,4 +1,8 @@
 // a multisliderV with a spec
+/*
+MSV().front;
+MSV(nil, 200@200).front;
+*/
 
 MSV : MultiSliderView{
 
