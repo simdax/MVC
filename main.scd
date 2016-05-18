@@ -4,7 +4,7 @@ a.gui(lay: VLayout)
 )
 (
 a=Pseq([5]);
-a.gui(nil, Rect(20,20,50,50))
+a.gui(nil, Rect(20,20,100,100), VLayout)
 )
 
 // in way for pbindEnvir

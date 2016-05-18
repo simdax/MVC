@@ -8,14 +8,15 @@ PatternGui : ObjectGui{
 
 	guiBody{ arg v, b, layout;
 		var list=model.guiList.asArray;
+		var innerV; var holder;
 		if(list.isEmpty)
 		{
 			var str=" sourry, no GUI available :( ";
 			StaticText(v, str.bounds+20).string_(str)
 		}
 		{
-			var holder;
-			View(v, b).layout_(
+			innerV=View(v, b);
+			innerV.layout_(
 				layout.new(
 					PopUpMenu()
 					.items_(list.collect(_.asSymbol))
@@ -29,11 +30,9 @@ PatternGui : ObjectGui{
 					holder=Vholder()
 					.fixedSize_
 						(
-							(if(v.bounds.extent==(0@0))
-							{150@150}
-							{v.bounds.extent}
-							- (0@(PopUpMenu().sizeHint.height+20)))
-						)
+							innerV.bounds.extent.postln
+							- (0@(PopUpMenu().sizeHint.height+20))
+						)					
 					.view_(
 						list[0], model
 					)
