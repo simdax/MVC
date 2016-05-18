@@ -2,25 +2,30 @@
 PatternGui : ObjectGui{
 	var <parent;
 	gui {
-		arg parent=ColoredView(nil).front,
-		bounds=360@350, lay=VLayout ;
-		parent.bounds_(bounds.asRect);		
-		this.guiBody(parent,bounds, lay);
+		arg parent=
+		Window().front, bounds, 
+		lay=VLayout
+		;
+		if(parent.layout.isNil){parent.layout_(HLayout())};
+		//parent.bounds_(bounds.asRect);		
+		this.guiBody(parent,lay);
 	}
 
-	guiBody{ arg v, b, layout;
+	guiBody{ arg v, layout;
 		var list=model.guiList.asArray;
 		var innerV; var holder;
-		parent=v;
+		//		parent=v;
 		if(list.isEmpty)
 		{
 			var str=" sourry, no GUI available :( ";
 			StaticText(v, str.bounds+20).string_(str)
 		}
 		{
-			innerV=View(v, b);
-			innerV.layout_(
-				layout.new(
+			// innerV=View(v, v.bounds.extent);
+			// innerV
+			v.layout.insert(
+				View().layout_(
+					layout.new(
 					PopUpMenu()
 					.items_(list.collect(_.asSymbol))
 					.action_{arg self;
@@ -33,13 +38,14 @@ PatternGui : ObjectGui{
 					holder=Vholder()
 					.fixedSize_
 						(
-							innerV.bounds.extent.postln
+							v.bounds.extent.postln
 							- (0@(PopUpMenu().sizeHint.height+20))
 						)					
 					.view_(
 						list[0], model
 					)
-				).spacing_(5).margins_(0)
+					).spacing_(5).margins_(0)
+				)
 			);
 		}
 	}

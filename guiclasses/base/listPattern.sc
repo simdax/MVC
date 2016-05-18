@@ -2,9 +2,9 @@ ListPatternGui : PatternGui{
 	var view;
 	var <>action;
 	guiWidget{/* should override*/}
-	guiBody{ arg v, b;
-		view=this.guiWidget.new(v, b)
-		//		.minSize_(360@300)
+	guiBody{ arg v;
+		view=this.guiWidget.new(v)
+		.minHeight_(300)
 		.value_(model.list)
 		.addDependant(this)
 	}
@@ -20,3 +20,5 @@ ListPatternGui : PatternGui{
 MSVGui : ListPatternGui{
 	guiWidget{^MSVPlus}	
 }
+
+

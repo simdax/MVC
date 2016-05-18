@@ -1,17 +1,18 @@
 (
 a=Pseq([5], inf);
-b=a.gui(nil, 350@350);
+b=a.gui();
 Pbind(\degree, a, \dur, 0.5).trace.play
 )
 
 (
+w=Window("test", Rect(0, 0, 400, 400)).front;
 a=Pseq([5]);
-b=a.gui(nil, 400@400, lay: VLayout);
-Pbind(\degree, Pn(a), \dur, 0.3).trace.play
+2.do{a.gui(w)};
 )
 (
+w=Window("test", Rect(0, 0, 400, 400)).front;
 a=Pseq([5]);
-a.gui(nil, Rect(20,20,100,100), VLayout)
+
 )
 
 // in way for pbindEnvir
@@ -22,8 +23,10 @@ a=Pbind(
 	\dur, c=Pseq([1,2], inf)
 );
 a.trace.play;
-b.gui(w, Rect(0,0,400,200), lay:VLayout);
-c.gui(w, Rect(0,200,400,200), lay:VLayout)
+ w.view.layout_(HLayout());
+ [b, c].do(w.view.layout.insert(_.gui))
+)
+
 )
 (
 
