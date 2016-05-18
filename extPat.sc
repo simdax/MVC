@@ -3,7 +3,7 @@
 	// to benefit specific options (lay)
 	// and easier invocation
 	gui{ arg p, lay;
-		^this.superPerform(\gui, p, nil,  lay)
+		^this.superPerform(\gui, p, lay)
 	}
 
 }

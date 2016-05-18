@@ -16,40 +16,13 @@ a=Pseq([5]);
 )
 
 // in way for pbindEnvir
-(
-w=Window('test', 400@800).front; 
-a=Pbind(
-	\degree, b=Pseq([0,1,2,5,10], inf),
-	\dur, c=Pseq([1,2], inf)
-);
-a.trace.play;
- w.view.layout_(HLayout());
- [b, c].do(w.view.layout.insert(_.gui))
-)
 
-)
 (
-
+w=Window("test", Rect(0, 0, 400, 400)).front;
 Pbind(
-	\degree, a=Pseq([0,1,2,4,1,2].normalizeSum, inf),
-	\dur, b=Pseq([1,1,2,1].normalizeSum, inf)
+	\degree, a=Pseq([0,1,2,4,1,2], inf),
+	\dur, b=Pseq([1,1,2,1], inf)
 ).play;
-[a, b].do(_.gui);
+[a, b].do(_.gui(w));
 )
 
-
-(
-a=Pbind.base;
-a.gui;
-)
-
-(
-
-c=Pbind(
-	\degree, a=Pseq([0,1,2,4,1,2].normalizeSum, inf),
-	\dur, b=Pseq([1,1,2,1].normalizeSum, inf)
-);
-c.play;
-c.gui(nil, 150@150)
-
-)

@@ -1,9 +1,9 @@
 
 PatternGui : ObjectGui{
-	var <parent;
+	//	var <parent;
 	gui {
 		arg parent=
-		Window().front, bounds, 
+		Window().front,// bounds, 
 		lay=VLayout
 		;
 		if(parent.layout.isNil){parent.layout_(HLayout())};
@@ -13,7 +13,8 @@ PatternGui : ObjectGui{
 
 	guiBody{ arg v, layout;
 		var list=model.guiList.asArray;
-		var innerV; var holder;
+		//var innerV;
+		var holder;
 		//		parent=v;
 		if(list.isEmpty)
 		{
