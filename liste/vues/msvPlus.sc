@@ -16,13 +16,15 @@ MSVPlus : View{
 		this.layout_(
 			VLayout(
 				View().layout_(
-					HLayout(
-						StaticText().string_(msv.spec.range),
+					VLayout(
+						VLayout(
+							RangeSlider().lo_(msv.spec.minval).hi_(msv.spec.maxval).orientation_(\horizontal),
+							StaticText().string_([msv.spec.minval, msv.spec.maxval])
+						).margins_(0).spacing_(0),
 						indicateur=StaticText()
 						.background_(Color.rand)
-						//.align(\center)
-					)
-				).fixedHeight_(40)
+					).margins_(0).spacing_(0),
+				).fixedHeight_(60)
 				, msv,
 				HLayout(
 					*[
