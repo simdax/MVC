@@ -7,7 +7,7 @@ MSV : MultiSliderView{
 		^super.new(lay, b).elasticMode_(true)
 		.spec_(spec)
 		.action_{ arg self;
-			self.changed(\value, self.value.postln)
+			self.changed(\value, self.value)
 		};
 	}
 	spec_{
@@ -15,8 +15,8 @@ MSV : MultiSliderView{
 		spec.addDependant(this)
 	}
 	value_{ arg val;
-		this.superPerform(\value_, val=spec.unmap(val) );
-		this.changed(\value, val)
+		this.superPerform(\value_, spec.unmap(val) );
+		this.changed(\value, this.value)
 	}
 	value{ 
 		^spec.map(this.superPerform(\value))
@@ -30,7 +30,7 @@ MSV : MultiSliderView{
 					\maxval, clipF.(spec.minval, spec.maxval)
 				)
 			}
-		)
+		);
 	}
 
 }

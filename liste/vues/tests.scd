@@ -1,13 +1,14 @@
 (
 
 a=MSVPlus().front.value_(Array.rand(3, 0, 10).postln);
-a.value;
 
 )
 
 
 (
 a=MSV();
+a.value;
+a.value_(a.value.clip(4,7));
 a.spec.gui
 
 

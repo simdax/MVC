@@ -11,9 +11,8 @@ MSVPlus : View{
 	}
 	init{
 		var specView=View()
-		.fixedWidth_(this.bounds.width)
-		.minHeight_(20)
-		;
+		.minWidth_(this.bounds.width)
+		.minHeight_(20)	;
 		msv=MSV(); msv.addDependant(this);
 		msv.spec.gui(specView);
 
