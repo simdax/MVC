@@ -7,9 +7,9 @@ MSV : MultiSliderView{
 	value_{ arg val;
 		this.superPerform(\value_, spec.unmap(val) )
 	}
-	// value{ arg val;
-	// 	this.superPerform(\value_, spec.map(val) )
-	// }
+	value{ 
+		^spec.map(this.superPerform(\value))
+	}
 	*new{ arg lay, b, spec=[0, 10];
 		^super.new(lay, b).elasticMode_(true)
 		.spec_(spec)
@@ -24,7 +24,7 @@ MSVPlus : View{
 		^super.new(p, b).init
 	}
 	doesNotUnderstand{ arg op ... args;
-		msv.perform(op, *args)
+		^msv.perform(op, *args)
 	}
 	init{
 		this.layout_(
