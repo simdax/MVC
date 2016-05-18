@@ -1,5 +1,0 @@
-+ ControlSpec{
-	guiClass{^ControlSpecGui}
-}
-
-

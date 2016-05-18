@@ -3,7 +3,7 @@ PatternGui : ObjectGui{
 	var <parent;
 	gui {
 		arg parent=ColoredView(nil).front,
-		bounds=360@300, lay=VLayout ;
+		bounds=360@350, lay=VLayout ;
 		parent.bounds_(bounds.asRect);		
 		this.guiBody(parent,bounds, lay);
 	}
