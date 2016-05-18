@@ -2,25 +2,29 @@ MSVPlus : View{
 
 	var msv, indicateur;
 	*new{ arg p, b;
-		^super.new(p, b).init
+		^super.new(p, b)
+		.minWidth_(360) // ctrlSpec
+		.init
 	}
 	doesNotUnderstand{ arg op ... args;
 		^msv.perform(op, *args)
 	}
 	init{
+		var specView=View()
+		.fixedWidth_(this.bounds.width)
+		.minHeight_(20)
+		;
 		msv=MSV()
 		.addAction({
 			arg self; indicateur.string_(self.value)
-		})
-		;
+		});
+		msv.spec.gui(specView);
+
 		this.layout_(
 			VLayout(
 				View().layout_(
 					VLayout(
-						VLayout(
-							RangeSlider().lo_(msv.spec.minval).hi_(msv.spec.maxval).orientation_(\horizontal),
-							StaticText().string_([msv.spec.minval, msv.spec.maxval])
-						).margins_(0).spacing_(0),
+						specView,
 						indicateur=StaticText()
 						.background_(Color.rand)
 					).margins_(0).spacing_(0),
