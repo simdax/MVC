@@ -1,0 +1,142 @@
+To build a GUI in SuperCollider is pretty simple. Open a window, insert a button, link a function with it is straight forward.
+
+a=FlowView().front;
+// SuperCollider manages a bunch of boilerplate
+3.do{
+	Button(a)
+	.action_{
+		"I've made a note \\°o°/ !".postln;
+		(freq: (200 .. 600).choose).play
+	}
+};
+
+When you do code, you want to organize it in a simple way : one
+thing is what it does, and at the end it does one thing.
+
+So, the mechanism of "one widget/one action" seems OK.
+
+Button().front.action_{"prout !".postln}
+
+Unfortunatly, it can happens that you want something more. And, 
+this patch thinking can be really complicated when growing bigger.
+In fact, if you want to do patch, you don't do supercollider, you do Max/MSP. Hopefully, SC got sumfin' fo ya.
+
+// To get more abstrativity, you need maybe class inheritance. Let's take
+// a comparison : a class hierarchy is like a layout organization in a
+// drawing.
+
+You have a layer, above it a second one, and maybe doing a third one. So let''s think with proto :
+
+Imagine a view with an random color widget every 10 sec.
+
+a=(new:{arg self;
+	var v=View().front; var b=PopUpMenu(v);
+	r{
+		loop
+		{
+			var color=[\blue, \red, \green].choose;
+			defer{b.background_(Color.perform(color))};
+			1.wait}
+	}.play
+}
+);
+a.new;
+
+It was maybe 10 minutes or 10 seconds for you to imagine this code, it does not matter. The fact is : now it's kind of logical. You've made a changing color Button.
+
+You find it cool, and you want to create a kind a widget with it.
+
+a=(new:{arg self, p, b;
+	var wid=PopUpMenu(p, b).front;
+	r{
+		loop
+		{
+			var color=[\blue, \red, \green].choose;
+			defer{wid.background_(Color.perform(color))};
+			1.wait}
+	}.play
+}
+);
+z=FlowView().front;
+4.do{a.new(z)};
+~catchPhrase="woooaw, it's christmas !";
+StaticText(z, ~catchPhrase.bounds).string_(~catchPhrase)
+
+Ok. Now, you add a function
+
+a=a++(colors:4.collect{Color.rand})
+
+And you understand you will add yout main code. Not very pleasefull, but, okay.... a little copy/paste, you can handle it.
+
+~a=(colors:4.collect{Color.rand},
+	func:{arg self; self.wid.background_(self.colors.choose)},
+	routine:{ arg self;	
+		Routine({ loop{
+			defer{self.func(self.wid)};
+			1.wait	
+		}})},
+	wid:PopUpMenu().front,
+	new:{ arg self;
+		self.routine().play
+	}
+);
+4.do{~a.copy.new}
+
+OK. Maybe you spent another 10 minutes, but now it pretty and you''re happy.
+
+unless....
+
+you want to add a feature !
+
+Imagine, you want to put the name of the color on your widget.
+Now you can trick it easily, hence the flexibilty of SC code:
+
+~a = ~a ++ (niouVar: wid:View().layout_(PopUpMenu(), Static))
+
+In fact, you see that your manner to do your first code is the problem.
+
+But that destroys your belief in OOP : I have done a first simple and
+cool widget, that works. Why can't I do some simple improvement, like
+a simple label management ?' Where is the problem, and why complexity ??
+
+Let''s take again yout first code:
+
+a=(new:{arg self, p, b;
+	self.wid=PopUpMenu(p, b).front;
+	r{
+		loop
+		{
+			var color=[\blue, \red, \green].choose;
+			defer{self.wid.background_(Color.perform(color));
+				self.changed(\color, color);
+				};
+			1.wait}
+	}.play
+}
+);
+
+Where is the problem ? Can''t we just "tell" supercollider the color is
+no more the same?
+
+And in fact, you can. just add this line
+
+self.changed(\color, color)
+
+a.new
+c=View().front;
+
+
+b=SimpleController(a).put(\color,
+	{ arg selfThanA, msgEqualColor,theRealArgAKAtheColor; 
+		defer
+		{
+			View(c, c.bounds.extent)
+			StaticText(c, Rect(20, 20, 50 ,50))
+			.string_(theRealArgAKAtheColor)
+		}
+	}
+)
+
+
+To tell it in other way, this control method is like adding a method
+in object afterwards, to fill a conceptual hole.

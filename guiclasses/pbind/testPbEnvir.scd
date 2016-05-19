@@ -9,3 +9,13 @@ Pbind(
 
 
 )
+
+(
+PbindEnvirGui(Pbind(
+	\degree, Pseq([0,1]),
+	\dur, Pseq([0,5]),
+	\bob, Plazy()
+)
+).gui
+)
+
